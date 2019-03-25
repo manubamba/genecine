@@ -1,12 +1,14 @@
 // import { ApolloServer, gql } from 'apollo-server';
-const { ApolloServer, gql } = require("apollo-server");
-const meds = require("./meds").default;
+const {
+  ApolloServer,
+  gql
+} = require("apollo-server");
+const meds = require("./genericMeds").default;
 const R = require("ramda");
 // This is a (sample) collection of books we'll be able to query
 // the GraphQL server for.  A more complete example might fetch
 // from an existing data source like a REST API or database.
-const books = [
-  {
+const books = [{
     title: "Harry Potter and the Chamber of Secrets",
     author: "J.K. Rowling"
   },
@@ -18,14 +20,10 @@ const books = [
 
 // Type definitions define the "shape" of your data and specify
 // which ways the data can be fetched from the GraphQL server.
-const typeDefs = gql`
+const typeDefs = gql `
   # Comments in GraphQL are defined with the hash (#) symbol.
 
   # This "Book" type can be used in other type declarations.
-  type Book {
-    title: String
-    author: String
-  }
   type Medicine {
     id: ID
     name: String
@@ -36,7 +34,6 @@ const typeDefs = gql`
   # The "Query" type is the root of all GraphQL queries.
   # (A "Mutation" type will be covered later on.)
   type Query {
-    books: [Book]
     medicines(id: ID): [Medicine]
     getMedicinesByName(name: String): [Medicine]
     medicine(id: ID!): Medicine
@@ -53,8 +50,12 @@ const resolvers = {
       console.log(R.find(R.propEq("id", args.id), meds));
       return [R.find(R.propEq("id", args.id), meds)];
     },
-    medicine: (_, { id }) => R.find(R.propEq("id", id), meds),
-    getMedicinesByName: (_, { name }) =>
+    medicine: (_, {
+      id
+    }) => R.find(R.propEq("id", id), meds),
+    getMedicinesByName: (_, {
+        name
+      }) =>
       R.filter(
         R.pipe(
           R.prop("name"),
@@ -69,10 +70,15 @@ const resolvers = {
 // In the most basic sense, the ApolloServer can be started
 // by passing type definitions (typeDefs) and the resolvers
 // responsible for fetching the data for those types.
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers
+});
 
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
-server.listen().then(({ url }) => {
+server.listen().then(({
+  url
+}) => {
   console.log(`🚀  Server ready at ${url}`);
 });

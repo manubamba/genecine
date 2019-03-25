@@ -1,7 +1,15 @@
-exports.default = [
-  {
+exports.default = [{
     id: "100001",
     name: "Aceclofenac + Paracetamol (100 mg + 325 mg) Tablets",
+    activeIngredients: [{
+        id: 'Aceclofenac<id>',
+        weight: '100mg'
+      },
+      {
+        id: 'Paracetamol<id>',
+        weight: '325mg'
+      },
+    ],
     unitSize: "10's",
     mrp: "5.7"
   },
@@ -41,8 +49,18 @@ exports.default = [
     unitSize: "10's",
     mrp: "2.3"
   },
-  { id: "100008", name: "Etoricoxilb 120mg Tab", unitSize: "10's", mrp: "33.96" },
-  { id: "100009", name: "Etoricoxilb 90mg Tab", unitSize: "10's", mrp: "25.99" },
+  {
+    id: "100008",
+    name: "Etoricoxilb 120mg Tab",
+    unitSize: "10's",
+    mrp: "33.96"
+  },
+  {
+    id: "100009",
+    name: "Etoricoxilb 90mg Tab",
+    unitSize: "10's",
+    mrp: "25.99"
+  },
   {
     id: "100010",
     name: "Ibuprofen film coated Tablets 200mg",
@@ -55,7 +73,12 @@ exports.default = [
     unitSize: "15's",
     mrp: "4.88"
   },
-  { id: "100012", name: "Nimesulide 100 mg Tab", unitSize: "10's", mrp: "2.52" },
+  {
+    id: "100012",
+    name: "Nimesulide 100 mg Tab",
+    unitSize: "10's",
+    mrp: "2.52"
+  },
   {
     id: "100013",
     name: "Paracetamol + Diclofenac Sodium (325 mg + 50 mg) Tab",
@@ -87,6 +110,17 @@ exports.default = [
     mrp: "4.38"
   },
   {
+    id: "100022",
+    name: "Tramadol Hydrochloride 100 mg Tab",
+    unitSize: "2ml",
+    mrp: "4.38",
+    drugs: [{
+      id: '422221',
+      weight: '100mg'
+    }],
+    description: 'Tramazac 100 MG Injection is a synthetic painkiller belonging to a group of medicines known as Opioid Analgesics. It is used to relieve moderate to severe pain. It is also used in relieving acute pain after surgery.'
+  },
+  {
     id: "100018",
     name: "Allopurinol 100 mg Tabs",
     unitSize: "10's",
@@ -108,6 +142,12 @@ exports.default = [
     id: "100021",
     name: "Paracetamol Tablets 650 mg",
     unitSize: "15's",
+    mrp: "8.03"
+  },
+  {
+    id: "100023",
+    name: "Tramadol Hcl 100 mg Inj",
+    unitSize: "2ml",
     mrp: "8.03"
   }
 ];
