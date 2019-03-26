@@ -1,10 +1,16 @@
 
-import React from 'react';
+import * as React from 'react';
 import { Text } from 'react-native';
-import PropTypes from 'prop-types';
 import { connectHighlight } from 'react-instantsearch-native';
+import Item from '../schema/Item';
 
-const Highlight = ({ attribute, hit, highlight }) => {
+interface HighlightProps {
+  attribute: string,
+  hit: Item,
+  highlight: (obj : any) => [],
+}
+
+const Highlight = ({ attribute, hit, highlight } : HighlightProps) => {
   const highlights = highlight({
     highlightProperty: '_highlightResult',
     attribute,
@@ -26,12 +32,6 @@ const Highlight = ({ attribute, hit, highlight }) => {
       })}
     </Text>
   );
-};
-
-Highlight.propTypes = {
-  attribute: PropTypes.string.isRequired,
-  hit: PropTypes.object.isRequired,
-  highlight: PropTypes.func.isRequired,
 };
 
 export default connectHighlight(Highlight);

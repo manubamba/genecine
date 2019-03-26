@@ -2,6 +2,7 @@ import * as React from 'react';
 import Highlight from './Highlight';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import { FlatList, StyleSheet, View } from 'react-native';
+import Item from '../schema/Item';
 
 const styles = StyleSheet.create({
   separator: {
@@ -18,10 +19,6 @@ interface InfiniteHitsProps {
   hits: Item[];
   hasMore: boolean;
   refine: () => {};
-}
-
-interface Item {
-  objectID: string;
 }
 
 const InfiniteHits = ({ hits, hasMore, refine }: InfiniteHitsProps) => (

@@ -1,6 +1,5 @@
-import React from 'react';
+import * as React from 'react';
 import { StyleSheet, View, TextInput } from 'react-native';
-import PropTypes from 'prop-types';
 import { connectSearchBox } from 'react-instantsearch-native';
 
 const styles = StyleSheet.create({
@@ -15,7 +14,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const SearchBox = ({ currentRefinement, refine, text }) => (
+interface SearchBoxProps {
+  currentRefinement: string,
+  refine: (a : string) => {},
+  text: string
+}
+
+const SearchBox = ({ currentRefinement, refine, text } : SearchBoxProps) => (
   <View style={styles.container}>
     <TextInput
       style={styles.input}
@@ -25,11 +30,5 @@ const SearchBox = ({ currentRefinement, refine, text }) => (
     />
   </View>
 );
-
-SearchBox.propTypes = {
-  currentRefinement: PropTypes.string.isRequired,
-  refine: PropTypes.func.isRequired,
-  text: PropTypes.string
-};
 
 export default connectSearchBox(SearchBox);
