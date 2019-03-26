@@ -1,12 +1,10 @@
-import * as React from "react";
-import { Text, View } from "react-native";
-import { SearchBar } from "react-native-elements";
+import * as React from 'react';
+import SearchBox from '../components/SearchBox';
+import { Text, View } from 'react-native';
 
 export const TsScreen = () => (
   <View>
-      <SearchBar
-        placeholder="Type Here..."
-      />
+    <SearchBox placeholder="Type Here..." />
     <Text>This should work</Text>
   </View>
 );

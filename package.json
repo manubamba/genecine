@@ -5,7 +5,9 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "storybook": "storybook start",
+    "prestorybook": "rnstl"
   },
   "jest": {
     "preset": "jest-expo"
@@ -20,11 +22,29 @@
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "5.1.0-alpha.13",
+    "@storybook/addon-links": "5.1.0-alpha.13",
+    "@storybook/addons": "5.1.0-alpha.13",
+    "@storybook/react-native": "5.1.0-alpha.13",
     "@types/expo": "^32.0.8",
     "@types/expo__vector-icons": "^9.0.1",
     "@types/react": "^16.8.8",
     "@types/react-native": "^0.57.41",
-    "jest-expo": "^32.0.0"
+    "@types/storybook__addon-actions": "^3.4.2",
+    "@types/storybook__addon-links": "^3.3.4",
+    "@types/storybook__react-native": "^3.0.4",
+    "babel-core": "^6.26.3",
+    "babel-runtime": "^6.26.0",
+    "jest-expo": "^32.0.0",
+    "prop-types": "^15.7.2",
+    "react-dom": "16.5.0",
+    "react-native-storybook-loader": "^1.8.0"
   },
-  "private": true
+  "private": true,
+  "config": {
+    "react-native-storybook-loader": {
+      "pattern": "./storybook/stories/**/**/*.tsx",
+      "outputFile": "./storybook/storyLoader.ts"
+    }
+  }
 }

@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { Platform } from 'react-native';
-import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
-
-import TsScreen from '../screens/TsScreen';
+import Storybook from '../storybook';
 import TabBarIcon from '../components/TabBarIcon';
+import TsScreen from '../screens/TsScreen';
+import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { Platform } from 'react-native';
 
 export const HomeStack = createStackNavigator({
-  Home: TsScreen,
+  Home: TsScreen
+});
+export const StorybookStack = createStackNavigator({
+  Home: Storybook
 });
 
 HomeStack.navigationOptions = {
-  tabBarLabel: 'Home',
-  tabBarIcon: ({ focused }: {focused: boolean}) => (
+  tabBarIcon: ({ focused }: { focused: boolean }) => (
     <TabBarIcon
       focused={focused}
       name={
@@ -20,10 +22,10 @@ HomeStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  ),
+  )
 };
 
-
 export default createBottomTabNavigator({
-  HomeStack,
+  StorybookStack,
+  HomeStack
 });
