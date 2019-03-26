@@ -13,21 +13,29 @@ const searchClient = algoliasearch(
 const styles = StyleSheet.create({
   closeButton: {
     alignItems: 'center',
-    marginTop: 20,
+    marginTop: 20
   },
   closeButtonText: {
-    fontSize: 18,
-  },
+    fontSize: 18
+  }
 });
 
 export const TsScreen = () => (
-  <View>
+  <View
+    style={{
+      marginTop: 30
+    }}
+  >
     <InstantSearch indexName="dev_brandedMeds" searchClient={searchClient}>
-    <SearchBox text= "Type the medicine name"/>
-    <InfiniteHits />
+      <SearchBox text="Type the medicine name" />
+      <InfiniteHits />
     </InstantSearch>
-    <Text>{"\n"} That's all for now</Text>
+    <Text>{'\n'} That's all for now</Text>
   </View>
 );
+
+TsScreen.navigationOptions = {
+  header: null
+};
 
 export default TsScreen;
