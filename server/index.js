@@ -3,32 +3,25 @@ const {
   ApolloServer,
   gql
 } = require("apollo-server");
-const meds = require("./genericMeds").default;
+const genericMeds = require("./genericMeds").default;
+const brandedMeds = require("./brandedMeds").default;
 const R = require("ramda");
-// This is a (sample) collection of books we'll be able to query
-// the GraphQL server for.  A more complete example might fetch
-// from an existing data source like a REST API or database.
-const books = [{
-    title: "Harry Potter and the Chamber of Secrets",
-    author: "J.K. Rowling"
-  },
-  {
-    title: "Jurassic Park",
-    author: "Michael Crichton"
-  }
-];
+
 
 // Type definitions define the "shape" of your data and specify
 // which ways the data can be fetched from the GraphQL server.
 const typeDefs = gql `
   # Comments in GraphQL are defined with the hash (#) symbol.
 
-  # This "Book" type can be used in other type declarations.
   type Medicine {
     id: ID
     name: String
     unitSize: String
     mrp: String
+    ingredients
+    genericMed
+    brandedAlternatives
+    uses
   }
 
   # The "Query" type is the root of all GraphQL queries.
@@ -44,15 +37,14 @@ const typeDefs = gql `
 // schema.  We'll retrieve books from the "books" array above.
 const resolvers = {
   Query: {
-    books: () => books,
     medicines: (parent, args, context, info) => {
       console.log(args);
-      console.log(R.find(R.propEq("id", args.id), meds));
-      return [R.find(R.propEq("id", args.id), meds)];
+      console.log(R.find(R.propEq("id", args.id), brandedMeds));
+      return [R.find(R.propEq("id", args.id), brandedMeds)];
     },
     medicine: (_, {
       id
-    }) => R.find(R.propEq("id", id), meds),
+    }) => R.find(R.propEq("id", id), genericMeds),
     getMedicinesByName: (_, {
         name
       }) =>
@@ -62,7 +54,7 @@ const resolvers = {
           R.toLower(),
           R.includes(R.toLower(name))
         ),
-        meds
+        genericMeds
       )
   }
 };

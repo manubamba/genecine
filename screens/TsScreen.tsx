@@ -3,23 +3,16 @@ import algoliasearch from "algoliasearch/lite";
 import Filters from "./Filters";
 import InfiniteHits from "./InfiniteHits";
 import SearchBox from "./SearchBox";
-import { Button, StyleSheet, Text, View } from "react-native";
-import { InstantSearch, connectRefinementList  } from "react-instantsearch-native";
+import { Button, Text, View } from "react-native";
+import {
+  InstantSearch,
+  connectRefinementList
+} from "react-instantsearch-native";
 
 const searchClient = algoliasearch(
   "5QD8782XZG",
   "fc49e07f378c19fb4f64281a44c76bf3"
 );
-
-const styles = StyleSheet.create({
-  closeButton: {
-    alignItems: "center",
-    marginTop: 20
-  },
-  closeButtonText: {
-    fontSize: 18
-  }
-});
 
 interface TsScreenState {
   isModalOpen: boolean;
@@ -28,7 +21,10 @@ interface TsScreenState {
 
 const VirtualRefinementList = connectRefinementList(() => null);
 
-export default class TsScreen extends React.Component<{}, TsScreenState> {
+class TsScreen extends React.Component<{}, TsScreenState> {
+  static navigationOptions = {
+    header: null
+  };
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -50,14 +46,18 @@ export default class TsScreen extends React.Component<{}, TsScreenState> {
   render() {
     const { isModalOpen, searchState } = this.state;
     return (
-      <View>
+      <View
+        style={{
+          marginTop: 30
+        }}
+      >
         <InstantSearch
           indexName="dev_brandedMeds"
           searchClient={searchClient}
           searchState={searchState}
           onSearchStateChange={this.onSearchStateChange}
         >
-        <VirtualRefinementList attribute="category" />
+          <VirtualRefinementList attribute="category" />
           <Filters
             isModalOpen={isModalOpen}
             searchClient={searchClient}
@@ -74,3 +74,5 @@ export default class TsScreen extends React.Component<{}, TsScreenState> {
     );
   }
 }
+
+export default TsScreen;
