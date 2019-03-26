@@ -7,12 +7,14 @@
 function loadStories() {
   require('./stories/SearchBox/index');
   require('./stories/index');
+  require('./stories/screens/BrandedMedScreen.stories');
   
 }
 
 const stories = [
   './stories/SearchBox/index',
   './stories/index',
+  './stories/screens/BrandedMedScreen.stories',
   
 ];
 

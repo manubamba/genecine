@@ -12,6 +12,10 @@ export const StorybookStack = createStackNavigator({
   Home: Storybook
 });
 
+StorybookStack.navigationOptions = {
+  header: null
+};
+
 HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }: { focused: boolean }) => (
     <TabBarIcon
@@ -22,7 +26,8 @@ HomeStack.navigationOptions = {
           : 'md-information-circle'
       }
     />
-  )
+  ),
+  header: null
 };
 
 export default createBottomTabNavigator({
