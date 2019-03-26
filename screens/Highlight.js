@@ -17,7 +17,7 @@ const Highlight = ({ attribute, hit, highlight }) => {
         const style = {
           backgroundColor: isHighlighted ? 'yellow' : 'transparent',
         };
-
+ 
         return (
           <Text key={index} style={style}>
             {value}
