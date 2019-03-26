@@ -1,11 +1,33 @@
 import * as React from 'react';
-import SearchBox from '../components/SearchBox';
-import { Text, View } from 'react-native';
+import algoliasearch from 'algoliasearch/lite';
+import InfiniteHits from './InfiniteHits';
+import SearchBox from './SearchBox';
+import { InstantSearch } from 'react-instantsearch-native';
+import { StyleSheet, Text, View } from 'react-native';
+
+const searchClient = algoliasearch(
+  '5QD8782XZG',
+  'fc49e07f378c19fb4f64281a44c76bf3'
+);
+
+const styles = StyleSheet.create({
+  closeButton: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  closeButtonText: {
+    fontSize: 18,
+  },
+});
 
 export const TsScreen = () => (
   <View>
-    <SearchBox placeholder="Type Here..." />
-    <Text>This should work</Text>
+    <InstantSearch indexName="dev_brandedMeds" searchClient={searchClient}>
+    <SearchBox text= "Type the medicine name"/>
+    <InfiniteHits />
+    </InstantSearch>
+    <Text>{"\n"} That's all for now</Text>
   </View>
 );
+
 export default TsScreen;
