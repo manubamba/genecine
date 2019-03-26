@@ -3,7 +3,8 @@ import algoliasearch from "algoliasearch/lite";
 import Filters from "./Filters";
 import InfiniteHits from "./InfiniteHits";
 import SearchBox from "./SearchBox";
-import { Button, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { Button } from "react-native-elements";
 import {
   InstantSearch,
   connectRefinementList
@@ -66,10 +67,22 @@ class TsScreen extends React.Component<{}, TsScreenState> {
             onSearchStateChange={this.onSearchStateChange}
           />
           <SearchBox text="Type the medicine name" />
-          <Button title="Filters" color="#252b33" onPress={this.toggleModal} />
+          <Button
+            title="Filters"
+            titleStyle={{ color: "#003366" }}
+            containerStyle={{ width: 100, alignSelf: "flex-end" }}
+            type="outline"
+            onPress={this.toggleModal}
+            icon={{
+              name: "filter-vintage",
+              size: 20,
+              color: "grey"
+            }}
+            raised
+          />
+          <Text>{"\n"}</Text>
           <InfiniteHits />
         </InstantSearch>
-        <Text>{"\n"} That's all for now</Text>
       </View>
     );
   }
