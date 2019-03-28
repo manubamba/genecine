@@ -1,8 +1,27 @@
-import * as React from "react";
-import { AppLoading, Font } from "expo";
-import { Platform, StatusBar, StyleSheet, View } from "react-native";
-import AppNavigator from "../navigation/AppNavigator";
-import MaterialIcons from "@expo/vector-icons/fonts/MaterialIcons.ttf";
+import * as React from 'react';
+import AppNavigator from '../navigation/AppNavigator';
+import MaterialIcons from '@expo/vector-icons/fonts/MaterialIcons.ttf';
+import { ApolloClient } from 'apollo-client';
+import { ApolloProvider } from 'react-apollo';
+import { AppLoading, Font } from 'expo';
+import { HttpLink } from 'apollo-link-http';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View
+  } from 'react-native';
+
+const cache = new InMemoryCache();
+const link = new HttpLink({
+  uri: 'https://tidy-earwig-10.localtunnel.me'
+})
+const client = new ApolloClient({
+  cache,
+  link
+})
+
 
 interface AppProps {
   skipLoadingScreen: boolean;
@@ -65,10 +84,12 @@ export default class App extends React.PureComponent<AppProps, AppState> {
       );
     } else {
       return (
+        <ApolloProvider client={client}>
         <View style={styles.container}>
           {Platform.OS === "ios" && <StatusBar barStyle="default" />}
           <AppNavigator />
         </View>
+        </ApolloProvider>
       );
     }
   }

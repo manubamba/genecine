@@ -1,27 +1,34 @@
 // import { ApolloServer, gql } from 'apollo-server';
-const {
-  ApolloServer,
-  gql
-} = require("apollo-server");
-const genericMeds = require("./genericMeds").default;
-const brandedMeds = require("./brandedMeds").default;
-const R = require("ramda");
-
+const { ApolloServer, gql } = require('apollo-server');
+const genericMeds = require('./genericMeds').default;
+const brandedMeds = require('./brandedMeds').default;
+const R = require('ramda');
 
 // Type definitions define the "shape" of your data and specify
 // which ways the data can be fetched from the GraphQL server.
-const typeDefs = gql `
+const typeDefs = gql`
   # Comments in GraphQL are defined with the hash (#) symbol.
+
+  type Ingredient {
+    name: String
+    potency: String
+  }
+
+  type MedPriceDetail {
+    name: String
+    price: String
+    pharmacy: String
+  }
 
   type Medicine {
     id: ID
     name: String
     unitSize: String
-    mrp: String
-    ingredients
-    genericMed
-    brandedAlternatives
-    uses
+    price: String
+    ingredients: [Ingredient]
+    genericMed: MedPriceDetail
+    brandedAlternatives: [MedPriceDetail]
+    uses: [String]
   }
 
   # The "Query" type is the root of all GraphQL queries.
@@ -38,19 +45,30 @@ const typeDefs = gql `
 const resolvers = {
   Query: {
     medicines: (parent, args, context, info) => {
-      console.log(args);
-      console.log(R.find(R.propEq("id", args.id), brandedMeds));
-      return [R.find(R.propEq("id", args.id), brandedMeds)];
+      return [R.find(R.propEq('id', args.id), brandedMeds)];
     },
-    medicine: (_, {
-      id
-    }) => R.find(R.propEq("id", id), genericMeds),
-    getMedicinesByName: (_, {
-        name
-      }) =>
+    medicine: (_, { id }) => {
+      const brandedMed = R.find(R.propEq('id', id), brandedMeds);
+      const genericMed = R.find(R.propEq('id', brandedMed.genericDrugId), genericMeds);
+      console.log(brandedMed);
+      console.log(genericMed);
+      return {
+        id: brandedMed.id,
+        name: brandedMed.name,
+        unitSize: genericMed.unitSize,
+        price: brandedMed.price,
+        ingredients: genericMed.ingredients,
+        genericMed: {
+          name: genericMed.name,
+          price: genericMed.price
+        },
+        uses: genericMed.uses
+      }
+    },
+    getMedicinesByName: (_, { name }) =>
       R.filter(
         R.pipe(
-          R.prop("name"),
+          R.prop('name'),
           R.toLower(),
           R.includes(R.toLower(name))
         ),
@@ -69,8 +87,6 @@ const server = new ApolloServer({
 
 // This `listen` method launches a web-server.  Existing apps
 // can utilize middleware options, which we'll discuss later.
-server.listen().then(({
-  url
-}) => {
+server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
