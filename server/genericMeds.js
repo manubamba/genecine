@@ -1,9 +1,7 @@
-exports.default = [
-  {
+exports.default = [{
     id: '100001',
     name: 'Aceclofenac + Paracetamol (100 mg + 325 mg) Tablets',
-    activeIngredients: [
-      {
+    activeIngredients: [{
         id: 'Aceclofenac<id>',
         weight: '100mg'
       },
@@ -79,7 +77,12 @@ exports.default = [
     id: '100012',
     name: 'Nimesulide 100 mg Tab',
     unitSize: "10's",
-    price: '2.52'
+    price: '2.52',
+    uses: [
+      'Acute Pain',
+      'Osteoarthritic Pain',
+      'Primary Dysmenorrhea',
+    ]
   },
   {
     id: '100013',
@@ -116,8 +119,7 @@ exports.default = [
     name: 'Tramadol Hydrochloride 100 mg Tab',
     unitSize: '2ml',
     price: '4.38',
-    description:
-      'Tramazac 100 MG Injection is a synthetic painkiller belonging to a group of medicines known as Opioid Analgesics. It is used to relieve moderate to severe pain. It is also used in relieving acute pain after surgery.'
+    description: 'Tramazac 100 MG Injection is a synthetic painkiller belonging to a group of medicines known as Opioid Analgesics. It is used to relieve moderate to severe pain. It is also used in relieving acute pain after surgery.'
   },
   {
     id: '100018',
@@ -146,12 +148,10 @@ exports.default = [
   {
     id: '100023',
     name: 'Tramadol Hcl 100 mg Inj',
-    ingredients: [
-      {
-        name: 'Tramadol',
-        potency: '100mg'
-      }
-    ],
+    ingredients: [{
+      name: 'Tramadol',
+      potency: '100mg'
+    }],
     unitSize: '2ml',
     price: '8.03',
     uses: ['good']

@@ -15,7 +15,7 @@ import {
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'https://sharp-cougar-96.localtunnel.me'
+  uri: 'https://tidy-earwig-10.localtunnel.me'
 })
 const client = new ApolloClient({
   cache,
