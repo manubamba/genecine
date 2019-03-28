@@ -154,6 +154,9 @@ exports.default = [{
     }],
     unitSize: '2ml',
     price: '8.03',
-    uses: ['good']
+    uses: [
+      'Moderate to severe pain',
+      'Chronic pain',
+    ]
   }
 ];
