@@ -22,6 +22,9 @@ const Highlight = ({ attribute, hit, highlight } : HighlightProps) => {
       {highlights.map(({ value, isHighlighted }, index) => {
         const style = {
           backgroundColor: isHighlighted ? 'yellow' : 'transparent',
+          color:'green',
+          fontWeight : '400' as '400',
+          textAlign:'right' as 'right'
         };
  
         return (
