@@ -15,7 +15,7 @@ import {
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'https://tricky-sloth-51.localtunnel.me'
+  uri: 'https://fast-starfish-71.localtunnel.me'
 })
 const client = new ApolloClient({
   cache,

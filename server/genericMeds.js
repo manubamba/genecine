@@ -156,7 +156,7 @@ exports.default = [{
     price: '8.03',
     uses: [
       'Moderate to severe pain',
-      'Chronic pain',
+      'Chronic pain'
     ]
   }
 ];

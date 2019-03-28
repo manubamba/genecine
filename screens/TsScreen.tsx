@@ -45,7 +45,6 @@ class TsScreen extends React.Component<TsScreenProps, TsScreenState> {
     }));
 
     navigateToMedDetails = (id: string) => {
-      console.log(id);
       this.props.navigation.navigate('BrandedMedScreen', {id})
     }
 

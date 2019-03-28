@@ -199,7 +199,6 @@ export const BrandedMedScreen: NavigationScreenComponent<
 };
 
 const QueriedBrandedMedScreen = ({ navigation, ...otherProps }: BrandedMedScreenProps) => {
-  console.log(navigation.getParam('id'));
   return (
   <Query query={GET_MED(navigation.getParam('id'))}>
     {({ loading, error, data }) => {
