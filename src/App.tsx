@@ -15,13 +15,12 @@ import {
 
 const cache = new InMemoryCache();
 const link = new HttpLink({
-  uri: 'https://fast-starfish-71.localtunnel.me'
-})
+  uri: 'https://genecine.herokuapp.com'
+});
 const client = new ApolloClient({
   cache,
   link
-})
-
+});
 
 interface AppProps {
   skipLoadingScreen: boolean;
@@ -60,7 +59,7 @@ const _loadResourcesAsync = async () => {
       // This is the font that we are using for our tab bar
       // We include SpaceMono because we use it in HomeScreen.js. Feel free
       // to remove this if you are not using it in your app
-      "space-mono": require("../assets/fonts/SpaceMono-Regular.ttf"),
+      'space-mono': require('../assets/fonts/SpaceMono-Regular.ttf'),
       MaterialIcons
     })
   ]).then(() => {});
@@ -85,10 +84,10 @@ export default class App extends React.PureComponent<AppProps, AppState> {
     } else {
       return (
         <ApolloProvider client={client}>
-        <View style={styles.container}>
-          {Platform.OS === "ios" && <StatusBar barStyle="default" />}
-          <AppNavigator />
-        </View>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            <AppNavigator />
+          </View>
         </ApolloProvider>
       );
     }
@@ -98,6 +97,6 @@ export default class App extends React.PureComponent<AppProps, AppState> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff"
+    backgroundColor: '#fff'
   }
 });
