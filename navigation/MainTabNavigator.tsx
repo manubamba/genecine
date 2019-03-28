@@ -3,7 +3,7 @@ import BrandedMedScreen from '../screens/BrandedMedScreen';
 import Storybook from '../storybook';
 import TabBarIcon from '../components/TabBarIcon';
 import TsScreen from '../screens/TsScreen';
-import { createBottomTabNavigator, createStackNavigator } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation';
 import { Platform } from 'react-native';
 
 export const HomeStack = createStackNavigator({
@@ -11,9 +11,6 @@ export const HomeStack = createStackNavigator({
 });
 export const StorybookStack = createStackNavigator({
   Home: Storybook
-});
-export const BrandedScreen = createStackNavigator({
-  Home: BrandedMedScreen
 });
 
 
@@ -32,6 +29,6 @@ HomeStack.navigationOptions = {
 };
 
 export default createStackNavigator({
-  HomeStack,
-  BrandedScreen,
+  TsScreen,
+  BrandedMedScreen,
 });
