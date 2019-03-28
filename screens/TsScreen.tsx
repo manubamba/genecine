@@ -1,14 +1,12 @@
-import * as React from "react";
-import algoliasearch from "algoliasearch/lite";
-import Filters from "./Filters";
-import InfiniteHits from "./InfiniteHits";
-import SearchBox from "./SearchBox";
-import { Text, View } from "react-native";
-import { Button } from "react-native-elements";
-import {
-  InstantSearch,
-  connectRefinementList
-} from "react-instantsearch-native";
+import * as React from 'react';
+import algoliasearch from 'algoliasearch/lite';
+import Filters from './Filters';
+import InfiniteHits from './InfiniteHits';
+import SearchBox from './SearchBox';
+import { Button } from 'react-native-elements';
+import { connectRefinementList, InstantSearch } from 'react-instantsearch-native';
+import { NavigationScreenProps } from 'react-navigation';
+import { Text, View } from 'react-native';
 
 const searchClient = algoliasearch(
   "5QD8782XZG",
@@ -20,9 +18,11 @@ interface TsScreenState {
   searchState: any;
 }
 
+interface TsScreenProps extends NavigationScreenProps {}
+
 const VirtualRefinementList = connectRefinementList(() => null);
 
-class TsScreen extends React.Component<{}, TsScreenState> {
+class TsScreen extends React.Component<TsScreenProps, TsScreenState> {
   static navigationOptions = {
     header: null
   };
@@ -43,6 +43,11 @@ class TsScreen extends React.Component<{}, TsScreenState> {
     this.setState(() => ({
       searchState
     }));
+
+    navigateToMedDetails = (id: string) => {
+      console.log(id);
+      this.props.navigation.navigate('BrandedScreen', {id})
+    }
 
   render() {
     const { isModalOpen, searchState } = this.state;
@@ -81,7 +86,7 @@ class TsScreen extends React.Component<{}, TsScreenState> {
             raised
           />
           <Text>{"\n"}</Text>
-          <InfiniteHits />
+          <InfiniteHits onMednamePress={this.navigateToMedDetails}/>
         </InstantSearch>
       </View>
     );

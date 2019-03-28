@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Highlight from './Highlight';
+import Item from '../schema/Item';
 import { connectInfiniteHits } from 'react-instantsearch-native';
 import { FlatList, StyleSheet, View } from 'react-native';
-import Item from '../schema/Item';
 
 const styles = StyleSheet.create({
   separator: {
@@ -19,9 +19,10 @@ interface InfiniteHitsProps {
   hits: Item[];
   hasMore: boolean;
   refine: () => {};
+  onMednamePress: () => {};
 }
 
-const InfiniteHits = ({ hits, hasMore, refine }: InfiniteHitsProps) => (
+const InfiniteHits = ({ hits, hasMore, refine, onMednamePress }: InfiniteHitsProps) => (
   <FlatList
     data={hits}
     keyExtractor={(item: Item) => item.objectID}
@@ -29,7 +30,7 @@ const InfiniteHits = ({ hits, hasMore, refine }: InfiniteHitsProps) => (
     onEndReached={() => hasMore && refine()}
     renderItem={({ item }) => (
       <View style={styles.item}>
-        <Highlight attribute="name" hit={item} />
+        <Highlight attribute="name" hit={item} onPress={onMednamePress} />
       </View>
     )}
   />

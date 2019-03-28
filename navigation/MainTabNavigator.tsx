@@ -1,4 +1,5 @@
 import * as React from 'react';
+import BrandedMedScreen from '../screens/BrandedMedScreen';
 import Storybook from '../storybook';
 import TabBarIcon from '../components/TabBarIcon';
 import TsScreen from '../screens/TsScreen';
@@ -11,10 +12,10 @@ export const HomeStack = createStackNavigator({
 export const StorybookStack = createStackNavigator({
   Home: Storybook
 });
+export const BrandedScreen = createStackNavigator({
+  Home: BrandedMedScreen
+});
 
-StorybookStack.navigationOptions = {
-  header: null
-};
 
 HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }: { focused: boolean }) => (
@@ -30,7 +31,7 @@ HomeStack.navigationOptions = {
   header: null
 };
 
-export default createBottomTabNavigator({
-  StorybookStack,
-  HomeStack
+export default createStackNavigator({
+  HomeStack,
+  BrandedScreen,
 });

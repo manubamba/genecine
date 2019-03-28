@@ -1,14 +1,23 @@
 import * as React from 'react';
 import gql from 'graphql-tag';
-import { NavigationScreenProp } from 'react-navigation';
-import { Query } from 'react-apollo';
 import {
-    ScrollView,
-    StyleProp,
-    TextStyle,
-    TouchableOpacity,
-    View
-    } from 'react-native';
+  createStackNavigator,
+  NavigationInjectedProps,
+  NavigationParams,
+  NavigationScreenComponent,
+  NavigationScreenConfigProps,
+  NavigationScreenProp,
+  NavigationScreenProps
+  } from 'react-navigation';
+import { Query } from 'react-apollo';
+import { ReactNode } from 'react';
+import {
+  ScrollView,
+  StyleProp,
+  TextStyle,
+  TouchableOpacity,
+  View
+  } from 'react-native';
 import { Text } from 'react-native-elements';
 
 interface Ingredient {
@@ -22,12 +31,13 @@ interface MedPriceDetail {
   pharmacy?: string;
 }
 
-interface BrandedMedScreenProps {
+interface BrandedMedScreenProps extends NavigationScreenProps {
   ingredients: Ingredient[];
   genericMed: MedPriceDetail;
   brandedAlternatives?: MedPriceDetail[];
   uses?: string[];
-  navigation?: NavigationScreenProp<any, any>;
+  name: string;
+  children?: ReactNode;
 }
 
 export const TextLabel = ({ children }: { children: string }) => (
@@ -101,81 +111,124 @@ export const NameAndPrice = ({
 const navigateToMedPage = () => {};
 
 const GET_MED = (id: string) => gql`{
-    medicine(${id}) {
-        ingredients
-        genericMed
-        brandedAlternatives
-        uses
+    medicine(id: ${id}) {
+      id
+      name
+      unitSize
+      price
+      ingredients {
+        name
+        potency
+      }
+      genericMed {
+        name
+        price
+      }
+      brandedAlternatives {
+        name
+        price
+        pharmacy
+      }
+      uses
     }
-}`;
+  }`;
 
-export const BrandedMedScreen = ({
-  ingredients,
-  genericMed,
-  brandedAlternatives,
-  uses,
-  navigation
-}: BrandedMedScreenProps) => (
-  <ScrollView
-    style={{
-      marginHorizontal: 10,
-      height: '100%'
-    }}
-  >
-    <TextLabel>Active ingredients</TextLabel>
-    {ingredients.map(ingredient => (
-      <TextValue key={ingredient.name}>{`${ingredient.name}(${
-        ingredient.potency
-      })`}</TextValue>
-    ))}
-    <Space />
-    <TextLabel>Generic Name</TextLabel>
-    <NameAndPrice {...genericMed} />
-    <Space />
-    {brandedAlternatives && brandedAlternatives.length && (
-      <View>
-        <TextLabel>Branded alternatives</TextLabel>
-        {brandedAlternatives.map(brandedAlternative => (
-          <TouchableOpacity
-            key={brandedAlternative.name}
-            onPress={() => navigateToMedPage()}
-          >
-            <NameAndPrice {...brandedAlternative} />
-            <Text
-              style={{
-                marginBottom: 5
-              }}
+const setTitle = (title: string, navigation: NavigationScreenProp<any>) => {
+  if (title !== navigation.getParam('title')) {
+    navigation.setParams({
+      title
+    })
+  }
+}
+
+export const BrandedMedScreen: NavigationScreenComponent<
+  NavigationParams,
+  {},
+  BrandedMedScreenProps
+> = (props: BrandedMedScreenProps) => {
+  const { ingredients, genericMed, brandedAlternatives, uses, navigation, name } = props;
+  setTitle(name, navigation);
+  return (
+    <ScrollView
+      style={{
+        marginHorizontal: 10,
+        height: '100%'
+      }}
+    >
+      <TextLabel>Active ingredients</TextLabel>
+      {ingredients.map(ingredient => (
+        <TextValue key={ingredient.name}>{`${ingredient.name}(${
+          ingredient.potency
+        })`}</TextValue>
+      ))}
+      <Space />
+      <TextLabel>Generic Name</TextLabel>
+      <NameAndPrice {...genericMed} />
+      <Space />
+      {brandedAlternatives && brandedAlternatives.length && (
+        <View>
+          <TextLabel>Branded alternatives</TextLabel>
+          {brandedAlternatives.map(brandedAlternative => (
+            <TouchableOpacity
+              key={brandedAlternative.name}
+              onPress={() => navigateToMedPage()}
             >
-              {brandedAlternative.pharmacy}
-            </Text>
-          </TouchableOpacity>
-        ))}
-        <Space />
-      </View>
-    )}
-    {uses && uses.length && (
-      <View>
-        <TextLabel>Uses</TextLabel>
-        {uses.map(use => (
-          <TextValue key={use}>{use}</TextValue>
-        ))}
-      </View>
-    )}
-  </ScrollView>
-);
+              <NameAndPrice {...brandedAlternative} />
+              <Text
+                style={{
+                  marginBottom: 5
+                }}
+              >
+                {brandedAlternative.pharmacy}
+              </Text>
+            </TouchableOpacity>
+          ))}
+          <Space />
+        </View>
+      )}
+      {uses && uses.length && (
+        <View>
+          <TextLabel>Uses</TextLabel>
+          {uses.map(use => (
+            <TextValue key={use}>{use}</TextValue>
+          ))}
+        </View>
+      )}
+    </ScrollView>
+  );
+};
 
-export default ({ navigation }: BrandedMedScreenProps) => (
-  <Query query={GET_MED(navigation && navigation.getParam('id'))}>
+const QueriedBrandedMedScreen = ({ navigation, ...otherProps }: BrandedMedScreenProps) => {
+  console.log(navigation.getParam('id'));
+  return (
+  <Query query={GET_MED(navigation.getParam('id'))}>
     {({ loading, error, data }) => {
-      if (loading) return 'Loading...';
-      if (error) return `Error! ${error.message}`;
-
+      if (loading) return <Text>'Loading...'</Text>;
+      if (error) return <Text>Error! {error.message}</Text>;
+      const { medicine } = data;
       return (
         <BrandedMedScreen
-          genericMed={data.genericMed}
-          ingredients={data.ingredients}
+          genericMed={medicine.genericMed}
+          ingredients={medicine.ingredients}
+          brandedAlternatives={medicine.brandedAlternatives}
+          name={medicine.name}
+          uses={medicine.uses}
+          navigation={navigation}
+          {...otherProps}
         />
       );
     }}
   </Query>
-);
+)};
+
+
+QueriedBrandedMedScreen.navigationOptions = ({
+  navigation
+}: NavigationScreenConfigProps) => {
+  return {
+    headerTitle: navigation.getParam('title')
+  };
+};
+
+
+export default QueriedBrandedMedScreen;
