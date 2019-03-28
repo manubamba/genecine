@@ -53,7 +53,7 @@ class TsScreen extends React.Component<TsScreenProps, TsScreenState> {
     return (
       <View
         style={{
-          marginTop: 30
+          marginTop: 20
         }}
       >
         <InstantSearch

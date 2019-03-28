@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet } from "react-native";
 import { connectSearchBox } from "react-instantsearch-native";
 import { SearchBar } from "react-native-elements";
 
@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: "#003366"
   },
-  inputContainerStyle:{
+  inputContainerStyle: {
     backgroundColor: "#ffffff"
   }
 });
@@ -22,17 +22,20 @@ interface SearchBoxProps {
   text: string;
 }
 
-const SearchBox = ({ currentRefinement, refine, text }: SearchBoxProps) => (
-  <SearchBar
-    lightTheme={true}
-    style={styles.input}
-    onChangeText={value => refine(value)}
-    value={currentRefinement}
-    placeholder={text}
-    cancelIcon={true}
-    containerStyle={styles.containerStyle}
-    inputContainerStyle={styles.inputContainerStyle}
-  />
-);
+const SearchBox = ({ currentRefinement, refine, text }: SearchBoxProps) => {
+  
+  return (
+    <SearchBar
+      lightTheme={true}
+      style={styles.input}
+      onChangeText={value => refine(value)}
+      value={currentRefinement}
+      placeholder={text}
+      clearIcon
+      containerStyle={styles.containerStyle}
+      inputContainerStyle={styles.inputContainerStyle}
+    />
+  );
+};
 
 export default connectSearchBox(SearchBox);

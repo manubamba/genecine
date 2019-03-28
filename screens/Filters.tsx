@@ -4,10 +4,11 @@ import {
   SafeAreaView,
   Modal,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { InstantSearch } from "react-instantsearch-native";
 import RefinementList from "./RefinementList";
+import { Icon } from "react-native-elements";
 
 const styles = StyleSheet.create({
   closeButton: {
@@ -42,10 +43,11 @@ const Filters = ({
         searchState={searchState}
         onSearchStateChange={onSearchStateChange}
       >
-        <RefinementList attribute="category" />
-        <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
+        <RefinementList attribute="category" toggleModal={toggleModal} />
+        <Icon iconStyle={{fontSize : 40}} name="check-circle" onPress={toggleModal}/>
+        {/* <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
           <Text style={styles.closeButtonText}>Close</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </InstantSearch>
     </SafeAreaView>
   </Modal>

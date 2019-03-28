@@ -18,19 +18,19 @@ const Highlight = ({ attribute, hit, highlight, onPress }: HighlightProps) => {
   });
 
   return (
-    <View>
+    <Text>
       {highlights.map(({ value, isHighlighted }, index) => {
         const style = {
-          backgroundColor: isHighlighted ? 'yellow' : 'transparent'
+          backgroundColor: isHighlighted ? 'yellow' : 'transparent',
         };
-
+ 
         return (
-          <TouchableOpacity key={index} onPress={() => onPress(hit.id)}>
-            <Text style={style}>{value}</Text>
-          </TouchableOpacity>
+          <Text key={index} style={style} onPress={() => onPress(hit.id)}>
+            {value}
+          </Text>
         );
       })}
-    </View>
+    </Text>
   );
 };
 
